@@ -1,23 +1,39 @@
-function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
-  }
+var d = (s, t, o) =>
+  new Promise((e, c) => {
+    var u = (n) => {
+        try {
+          r(o.next(n));
+        } catch (a) {
+          c(a);
+        }
+      },
+      h = (n) => {
+        try {
+          r(o.throw(n));
+        } catch (a) {
+          c(a);
+        }
+      },
+      r = (n) => (n.done ? e(n.value) : Promise.resolve(n.value).then(u, h));
+    r((o = o.apply(s, t)).next());
+  });
+function i(s) {
+  if (s.ok) return s.json();
+  throw new Error("Bad Response");
 }
-
-export default class ProductData {
-  constructor(category) {
-    this.category = category;
-    this.path = "json/" + category + ".json";
+export default class f {
+  constructor(t) {
+    (this.category = t), (this.path = "json/" + t + ".json");
   }
   getData() {
     return fetch("json/tents.json")
-      .then(convertToJson)
-      .then((data) => data);
+      .then(i)
+      .then((t) => t);
   }
-  async findProductById(id) {
-    const products = await this.getData();
-    return products.find((item) => item.Id === id);
+  findProductById(t) {
+    return d(this, null, function* () {
+      const o = yield this.getData();
+      return o.find((e) => e.Id === t);
+    });
   }
 }

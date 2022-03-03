@@ -1,51 +1,61 @@
-import ProductData from "./productData.js";
-
-export default class ProductList {
-  constructor(category) {
-    this.category = category;
-    this.path = "json/" + category + ".json";
-    this._list = null; // Will be set next time getList() is called
+var l = (o, t, s) =>
+  new Promise((r, e) => {
+    var n = (i) => {
+        try {
+          c(s.next(i));
+        } catch (d) {
+          e(d);
+        }
+      },
+      a = (i) => {
+        try {
+          c(s.throw(i));
+        } catch (d) {
+          e(d);
+        }
+      },
+      c = (i) => (i.done ? r(i.value) : Promise.resolve(i.value).then(n, a));
+    c((s = s.apply(o, t)).next());
+  });
+import p from "./productData.js";
+import "./utils.js";
+export default class u {
+  constructor(t) {
+    (this.category = t),
+      (this.path = "json/" + t + ".json"),
+      (this._list = null);
   }
-
-  // Returns the list
-  async getList() {
-    if (this._list != null) {
-      return this._list;
-    } else {
-      // Get the list of products
-      this._list = await new ProductData(this.category).getData();
-      return this._list;
-    }
+  getList() {
+    return l(this, null, function* () {
+      return this._list != null
+        ? this._list
+        : ((this._list = yield new p(this.category).getData()), this._list);
+    });
   }
-
-  /* Pastes a template for the given product index (its position in getList()) */
-  async appendProductCard(element, index) {
-    const template = document.getElementById("product-card-template");
-    let clone = template.content.cloneNode(true);
-    let list = await this.getList();
-    let product = list[index];
-
-    // Append the element before editing (templates are read-only)
-    element.appendChild(clone);
-    clone = element.lastElementChild;
-
-    // Replace each template ID with the product's corresponding data
-    let newHTML = clone.innerHTML;
-    newHTML = newHTML.replace("$PRODUCT_ID$", product.Id);
-    newHTML = newHTML.replace("$IMG_SRC$", product.Image);
-    newHTML = newHTML.replace("$IMG_DESCRIPTION$", product.Name);
-    newHTML = newHTML.replace("$BRAND$", product.Brand.Name);
-    newHTML = newHTML.replace("$NAME$", product.Name);
-    newHTML = newHTML.replace("$LIST_PRICE$", product.ListPrice);
-    clone.innerHTML = newHTML;
+  appendProductCard(t, s) {
+    return l(this, null, function* () {
+      const r = document.getElementById("product-card-template");
+      let e = r.content.cloneNode(!0),
+        n = yield this.getList(),
+        a = n[s];
+      t.appendChild(e),
+        (e = t.lastElementChild),
+        (e.innerHTML = e.innerHTML.multiReplace([
+          ["$PRODUCT_ID$", a.Id],
+          ["$IMG_SRC$", a.Image],
+          ["$IMG_DESCRIPTION$", a.Name],
+          ["$BRAND$", a.Brand.Name],
+          ["$NAME$", a.Name],
+          ["$LIST_PRICE$", a.ListPrice],
+        ]));
+    });
   }
-
-  /* Pastes HTML for the entire list. CSS and Javascript *
-   * may be necessary to properly display large lists    */
-  async appendProductCards(element) {
-    let list = await this.getList();
-    list.forEach((product, index) => {
-      this.appendProductCard(element, index);
+  appendProductCards(t) {
+    return l(this, null, function* () {
+      let s = yield this.getList();
+      s.forEach((r, e) => {
+        this.appendProductCard(t, e);
+      });
     });
   }
 }

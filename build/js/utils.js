@@ -1,27 +1,29 @@
-// wrapper for querySelector...returns matching element
-export function qs(selector) {
-  return document.querySelector(selector);
+export function qs(t) {
+  return document.querySelector(t);
 }
-
-// retrieve data from localstorage
-export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+export function getLocalStorage(t) {
+  return JSON.parse(localStorage.getItem(t));
 }
-// save data to local storage
-export function setLocalStorage(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+export function setLocalStorage(t, e) {
+  localStorage.setItem(t, JSON.stringify(e));
 }
-// set a listener for both touchend and click
-export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
-    event.preventDefault();
-    callback();
-  });
-  qs(selector).addEventListener("click", callback);
+export function setClick(t, e) {
+  qs(t).addEventListener("touchend", (r) => {
+    r.preventDefault(), e();
+  }),
+    qs(t).addEventListener("click", e);
 }
-
-export function getParam(param) {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  return urlParams.get(param);
+export function getParam(t) {
+  const e = window.location.search,
+    r = new URLSearchParams(e);
+  return r.get(t);
 }
+String.prototype.multiReplace = function (t) {
+  let e = this.toString();
+  return (
+    t.forEach((r) => {
+      e = e.replace(r[0], r[1]);
+    }),
+    e
+  );
+};
