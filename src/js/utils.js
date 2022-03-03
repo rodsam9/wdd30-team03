@@ -33,8 +33,10 @@ export function getParam(param) {
  * text = "The big dog ate 2 pepperoni pizzas."                                     *
  * text.multiReplace(parameters) == "The big cat ate 3 cheese pizzas."              *
  ************************************************************************************/
-String.prototype.multiReplace = function(parameters) {
+String.prototype.multiReplace = function (parameters) {
   let newStr = this.toString();
-  parameters.forEach((args) => { newStr = newStr.replace(args[0], args[1]); });
+  parameters.forEach((args) => {
+    newStr = newStr.replace(args[0], args[1]);
+  });
   return newStr;
-}
+};
