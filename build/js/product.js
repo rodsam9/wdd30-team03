@@ -1,21 +1,9 @@
-let products = [];
-function convertToJson(t) {
-  if (t.ok) return t.json();
-  throw new Error("Bad Response");
-}
-function setLocalStorage(t, e) {
-  localStorage.setItem(t, JSON.stringify(e));
-}
-function getProductsData() {
-  fetch("../json/tents.json")
-    .then(convertToJson)
-    .then((t) => {
-      products = t;
-    });
-}
-function addToCart(t) {
-  const e = products.find((n) => n.Id === t.target.dataset.id);
-  setLocalStorage("so-cart", e);
-}
-getProductsData(),
-  document.getElementById("addToCart").addEventListener("click", addToCart);
+import ProductData from "./productData.js";
+import ProductDetails from "./productDetails.js";
+import { getParam } from "./utils.js";
+
+const dataSource = new ProductData("tents");
+const productId = getParam("product");
+
+const product = new ProductDetails(productId, dataSource);
+product.init();
