@@ -1,15 +1,29 @@
-export function qs(e, t = document) {
-  return t.querySelector(e);
+export function qs(t) {
+  return document.querySelector(t);
 }
-export function getLocalStorage(e) {
-  return JSON.parse(localStorage.getItem(e));
+export function getLocalStorage(t) {
+  return JSON.parse(localStorage.getItem(t));
 }
-export function setLocalStorage(e, t) {
-  localStorage.setItem(e, JSON.stringify(t));
+export function setLocalStorage(t, e) {
+  localStorage.setItem(t, JSON.stringify(e));
 }
-export function setClick(e, t) {
-  qs(e).addEventListener("touchend", (n) => {
-    n.preventDefault(), t();
+export function setClick(t, e) {
+  qs(t).addEventListener("touchend", (r) => {
+    r.preventDefault(), e();
   }),
-    qs(e).addEventListener("click", t);
+    qs(t).addEventListener("click", e);
 }
+export function getParam(t) {
+  const e = window.location.search,
+    r = new URLSearchParams(e);
+  return r.get(t);
+}
+String.prototype.multiReplace = function (t) {
+  let e = this.toString();
+  return (
+    t.forEach((r) => {
+      e = e.replace(r[0], r[1]);
+    }),
+    e
+  );
+};
