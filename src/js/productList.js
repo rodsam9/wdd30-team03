@@ -34,7 +34,7 @@ export default class ProductList {
     clone.innerHTML = clone.innerHTML.multiReplace([
       ["$PRODUCT_ID$", product.Id],
 	  ["$CATEGORY$", this.category],
-      ["$IMG_SRC$", product.Image],
+      ["$IMG_SRC$", product.Images.PrimaryLarge],
       ["$IMG_DESCRIPTION$", product.Name],
       ["$BRAND$", product.Brand.Name],
       ["$NAME$", product.Name],
