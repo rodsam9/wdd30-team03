@@ -23,11 +23,11 @@
       </p>
     </section>
     <section class="products">
-      <h2>Top Products</h2>
+      <h2 id="products-title"></h2>
       <ul class="product-list">
         <template id="product-card-template">
           <li class="product-card">
-            <a class="product-card__link" href="product-details?product=$PRODUCT_ID$">
+            <a class="product-card__link" href="product-details?product=$PRODUCT_ID$&category=$CATEGORY$">
               <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$" />
               <h3 class="product-card__brand">$BRAND$</h3>
               <h2 class="product-card__name">$NAME$</h2>
