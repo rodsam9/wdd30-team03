@@ -25,38 +25,15 @@
     <section class="products">
       <h2>Top Products</h2>
       <ul class="product-list">
-        <li class="product-card">
-          <a class="product-card__link" href="product-details?product=$PRODUCT_ID$">
-            <img src="" alt="$IMG_DESCRIPTION$" />
-            <h3 class="product-card__brand">$BRAND$</h3>
-            <h2 class="product-card__name">$NAME$</h2>
-            <p class="product-card__price">$LIST_PRICE$</p>
-          </a>
-        </li>
-        <li class="product-card">
-          <a class="product-card__link" href="product-details?product=$PRODUCT_ID$">
-            <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$" />
-            <h3 class="product-card__brand">$BRAND$</h3>
-            <h2 class="product-card__name">$NAME$</h2>
-            <p class="product-card__price">$LIST_PRICE$</p>
-          </a>
-        </li>
-        <li class="product-card">
-          <a class="product-card__link" href="product-details?product=$PRODUCT_ID$">
-            <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$" />
-            <h3 class="product-card__brand">$BRAND$</h3>
-            <h2 class="product-card__name">$NAME$</h2>
-            <p class="product-card__price">$LIST_PRICE$</p>
-          </a>
-        </li>
-        <li class="product-card">
-          <a class="product-card__link" href="product-details?product=$PRODUCT_ID$">
-            <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$" />
-            <h3 class="product-card__brand">$BRAND$</h3>
-            <h2 class="product-card__name">$NAME$</h2>
-            <p class="product-card__price">$LIST_PRICE$</p>
-          </a>
-        </li>
+        <template id="product-card-template">
+          <li class="product-card">
+            <a class="product-card__link" href="product-details?product=$PRODUCT_ID$">
+              <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$" />
+              <h3 class="product-card__brand">$BRAND$</h3>
+              <h2 class="product-card__name">$NAME$</h2>
+              <p class="product-card__price">$LIST_PRICE$</p>
+            </a>
+          </li>
         </template>
       </ul>
     </section>
