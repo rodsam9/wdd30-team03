@@ -33,7 +33,7 @@ export default class ProductList {
     // Replace each template ID with the product's corresponding data
     clone.innerHTML = clone.innerHTML.multiReplace([
       ["$PRODUCT_ID$", product.Id],
-	  ["$CATEGORY$", this.category],
+      ["$CATEGORY$", this.category],
       ["$IMG_SRC$", product.Images.PrimaryLarge],
       ["$IMG_DESCRIPTION$", product.Name],
       ["$BRAND$", product.Brand.Name],

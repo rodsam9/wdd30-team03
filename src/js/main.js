@@ -7,7 +7,10 @@ let listElement = document.getElementsByClassName("product-list")[0];
 let list = new ProductList(category);
 
 // Change the title
-document.getElementById("products-title").innerHTML = "Top Products: " + category[0].toUpperCase() + category.substring(1).replace("-", " ");
+document.getElementById("products-title").innerHTML =
+  "Top Products: " +
+  category[0].toUpperCase() +
+  category.substring(1).replace("-", " ");
 
 // Display the tents (Remove code and uncomment first line to display all tents)
 //list.appendProductCards(listElement);
