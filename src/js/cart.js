@@ -1,3 +1,5 @@
+import { loadHeaderFooter } from "./utils.js";
+
 function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
@@ -29,4 +31,8 @@ function renderCartItem(item) {
   return newItem;
 }
 
-getCartContents();
+// TODO: FIX THIS CODE
+// getCartContents();
+
+// Load the header and footer
+loadHeaderFooter();

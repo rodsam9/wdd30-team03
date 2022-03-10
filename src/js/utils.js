@@ -40,3 +40,41 @@ String.prototype.multiReplace = function (parameters) {
   });
   return newStr;
 };
+
+/* Renders a template */
+export function renderWithTemplate(template, parent, data, callback) {
+  let clone = template.content.cloneNode(true);
+  if (callback) {
+    clone = callback(clone, data);
+  }
+
+  parent.appendChild(clone);
+}
+
+/* Used by loadTemplate */
+function convertToText(res) {
+  if (res.ok) {
+    return res.text();
+  } else {
+    throw new Error("Bad Response");
+  }
+}
+
+export async function loadTemplate(path) {
+  const html = await fetch(path).then(convertToText);
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  // Get the header and footer templates and elements
+  let header = await loadTemplate("../partials/header.html");
+  let footer = await loadTemplate("../partials/footer.html");
+  let headerE = document.getElementsByTagName("header")[0];
+  let footerE = document.getElementsByTagName("footer")[0];
+
+  // Apply the header and footer
+  renderWithTemplate(header, headerE);
+  renderWithTemplate(footer, footerE);
+}
