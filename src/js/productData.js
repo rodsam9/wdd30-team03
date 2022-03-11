@@ -9,13 +9,13 @@ function convertToJson(res) {
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = "json/" + category + ".json";
+    this.path = "http://157.201.228.93:2992/products/search/" + category;
   }
 
   getData() {
-    return fetch("json/tents.json")
+    return fetch(this.path)
       .then(convertToJson)
-      .then((data) => data);
+      .then((data) => data.Result);
   }
 
   async findProductById(id) {
