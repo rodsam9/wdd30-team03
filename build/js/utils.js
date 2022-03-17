@@ -1,20 +1,20 @@
-var i = (e, t, n) =>
-  new Promise((r, a) => {
-    var u = (o) => {
+var l = (e, t, n) =>
+  new Promise((o, a) => {
+    var u = (r) => {
         try {
-          c(n.next(o));
-        } catch (l) {
-          a(l);
+          c(n.next(r));
+        } catch (i) {
+          a(i);
         }
       },
-      p = (o) => {
+      p = (r) => {
         try {
-          c(n.throw(o));
-        } catch (l) {
-          a(l);
+          c(n.throw(r));
+        } catch (i) {
+          a(i);
         }
       },
-      c = (o) => (o.done ? r(o.value) : Promise.resolve(o.value).then(u, p));
+      c = (r) => (r.done ? o(r.value) : Promise.resolve(r.value).then(u, p));
     c((n = n.apply(e, t)).next());
   });
 export function qs(e) {
@@ -46,27 +46,31 @@ String.prototype.multiReplace = function (e) {
     t
   );
 };
-export function renderWithTemplate(e, t, n, r) {
+export function renderWithTemplate(e, t, n, o) {
   let a = e.content.cloneNode(!0);
-  r && (a = r(a, n)), t.appendChild(a);
+  o && (a = o(a, n)), t.appendChild(a);
 }
 function d(e) {
   if (e.ok) return e.text();
   throw new Error("Bad Response");
 }
 export function loadTemplate(e) {
-  return i(this, null, function* () {
+  return l(this, null, function* () {
     const t = yield fetch(e).then(d),
       n = document.createElement("template");
     return (n.innerHTML = t), n;
   });
 }
+function m(e) {
+  let t = "";
+  e.innerHTML = e.innerHTML.replace("%breadcrumb%", t);
+}
 export function loadHeaderFooter() {
-  return i(this, null, function* () {
+  return l(this, null, function* () {
     let e = yield loadTemplate("../partials/header.html"),
       t = yield loadTemplate("../partials/footer.html"),
       n = document.getElementsByTagName("header")[0],
-      r = document.getElementsByTagName("footer")[0];
-    renderWithTemplate(e, n), renderWithTemplate(t, r);
+      o = document.getElementsByTagName("footer")[0];
+    m(e), renderWithTemplate(e, n), renderWithTemplate(t, o);
   });
 }

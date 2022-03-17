@@ -1,14 +1,17 @@
-import { loadHeaderFooter as e } from "./utils.js";
+import { loadHeaderFooter as l } from "./utils.js";
 function o(a) {
   return JSON.parse(localStorage.getItem(a));
 }
 function n() {
   let a = "";
-  const r = o("so-cart"),
-    t = r.map((c) => s(c));
-  document.querySelector(".product-list").innerHTML = t.join("");
+  const r = o("so-cart");
+  if (r != null) {
+    let t = [];
+    r.map === "function" ? (t = r.map((c) => e(c))) : r != null && (t = [e(r)]),
+      (document.querySelector(".product-list").innerHTML = t.join(""));
+  }
 }
-function s(a) {
+function e(a) {
   const r = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
@@ -23,6 +26,6 @@ function s(a) {
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${a.FinalPrice}</p>
 </li>`;
-  return console.log(r), r;
+  return r;
 }
-e();
+n(), l();

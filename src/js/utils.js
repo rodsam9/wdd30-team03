@@ -67,12 +67,21 @@ export async function loadTemplate(path) {
   return template;
 }
 
+function applyBreadcrumb(template) {
+  let text = ""; // TODO: Generate breadcrumb trail
+
+  template.innerHTML = template.innerHTML.replace("%breadcrumb%", text);
+}
+
 export async function loadHeaderFooter() {
   // Get the header and footer templates and elements
   let header = await loadTemplate("../partials/header.html");
   let footer = await loadTemplate("../partials/footer.html");
   let headerE = document.getElementsByTagName("header")[0];
   let footerE = document.getElementsByTagName("footer")[0];
+
+  // Apply the breadcrumb trail
+  applyBreadcrumb(header);
 
   // Apply the header and footer
   renderWithTemplate(header, headerE);
