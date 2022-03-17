@@ -1,4 +1,4 @@
-import { setLocalStorage } from "./utils.js";
+import { setLocalStorage, getLocalStorage } from "./utils.js";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -8,14 +8,26 @@ export default class ProductDetails {
   }
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+	this.product.Quantity = 1;
     document.querySelector("main").innerHTML = this.renderProductDetails();
+
     // add listener to Add to Cart button
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
   }
   addToCart() {
-    setLocalStorage("so-cart", this.product);
+	let cart = getLocalStorage("so-cart");
+	if (cart == null) cart = [];
+	
+	// Add the item
+	let cartItem = cart.find(item => item.Id == this.product.Id);
+	if (cartItem != null)
+	  cartItem.Quantity++;
+    else
+	  cart.push(this.product);
+
+    setLocalStorage("so-cart", cart);
   }
   renderProductDetails() {
     return `<section class="product-detail"> <h3>${this.product.Brand.Name}</h3>

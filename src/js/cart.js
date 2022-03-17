@@ -10,10 +10,8 @@ function getCartContents() {
 
   if (cartItems != null) {
     let htmlItems = [];
-    if (cartItems.map === "function") {
+    if (cartItems.map != null) {
       htmlItems = cartItems.map((item) => renderCartItem(item));
-    } else if (cartItems != null) {
-      htmlItems = [renderCartItem(cartItems)];
     }
 
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
