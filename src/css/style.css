@@ -37,7 +37,7 @@ header {
 
 .logo {
   line-height: 60px;
-  width: 245px;
+  width: auto;
   overflow: hidden;
   display: flex;
   font-size: 30px;
@@ -108,6 +108,22 @@ button:hover { cursor: pointer; }
 
 .divider {
   border-bottom: 2px solid var(--primary-color);
+}
+
+.breadcrumb > ul {
+  margin-block-start: 0;
+  padding-inline-start: 8px;
+}
+
+.breadcrumb > ul > li {
+  display: inline;
+  padding-right: 8px;
+}
+
+.breadcrumb > ul > li:before {
+  content: "> ";
+  font-family: var(--font-body);
+  font-weight: bold;
 }
 /* End utility classes */
 
