@@ -7,14 +7,26 @@ function getLocalStorage(key) {
 function getCartContents() {
   let markup = "";
   const cartItems = getLocalStorage("so-cart");
+  var totalCost = 0.00;
+  var totalRetail = 0.00;
 
   if (cartItems != null) {
     let htmlItems = [];
     if (cartItems.map != null) {
-      htmlItems = cartItems.map((item) => renderCartItem(item));
+      htmlItems = cartItems.map((item) => {
+	    totalCost += item.FinalPrice * item.Quantity;
+		totalRetail += item.SuggestedRetailPrice * item.Quantity;
+		return renderCartItem(item)
+	  });
     }
 
-    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+    document.querySelector(".cart-list").innerHTML = htmlItems.join("");
+  }
+  
+  // Display the total and discount if there is a total
+  if (totalRetail > 0.00) {
+	document.getElementsByClassName("cart-total")[0].innerHTML = `Total: <span class="cart-struck-price">$${totalRetail.toFixed(2)}</span>&ensp;<span class="cart-discount">$${totalCost.toFixed(2)}</span>!`;
+	document.getElementsByClassName("cart-footer")[0].removeAttribute("hidden");
   }
 }
 
@@ -22,7 +34,7 @@ function renderCartItem(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Images.PrimaryLarge}"
+      src="${item.Images.PrimaryMedium}"
       alt="${item.Name}"
     />
   </a>
@@ -31,13 +43,11 @@ function renderCartItem(item) {
   </a>
   <p class="cart-card__color">${item.Colors[item.SelectedColor].ColorName}</p>
   <p class="cart-card__quantity">qty: ${item.Quantity}</p>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
+  <p class="cart-card__price"><span class="cart-struck-price">$${item.FinalPrice.toFixed(2)}</span>&emsp;<span class="cart-discount">$${item.SuggestedRetailPrice.toFixed(2)}</span></p>
 </li>`;
   return newItem;
 }
 
-// TODO: FIX THIS CODE
+// Load the cart contents and the header and footer
 getCartContents();
-
-// Load the header and footer
 loadHeaderFooter();
