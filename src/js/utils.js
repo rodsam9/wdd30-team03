@@ -77,11 +77,11 @@ function applyBreadcrumb(template) {
   pieces.shift(); // Remove blank space
   
   // Add the index page to the beadcrumb trail
-  text += `<li><a href="${url}">Home</a></li>`;
+  // text += `<li><a href="${url}">Home</a></li>`;
   
   // Add each link afterwards
   pieces.forEach(piece => {
-    if (piece != "") { // Don't do this if we're on the main index
+    if (piece != "" && piece != "index.html") { // Don't do this if we're on the main index
       url += "/" + piece;
 	
 	  // Calculate the title: "product-details?product=989CH&category=tents" => "Product Details"

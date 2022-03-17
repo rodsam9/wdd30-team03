@@ -25,7 +25,7 @@ function getCartContents() {
   
   // Display the total and discount if there is a total
   if (totalRetail > 0.00) {
-	document.getElementsByClassName("cart-total")[0].innerHTML = `Total: <span class="cart-struck-price">$${totalRetail.toFixed(2)}</span>&ensp;<span class="cart-discount">$${totalCost.toFixed(2)}</span>!`;
+	document.getElementsByClassName("cart-total")[0].innerHTML = `Total: <span class="struck-price">$${totalRetail.toFixed(2)}</span>&ensp;<span class="discount-price">$${totalCost.toFixed(2)}</span>!`;
 	document.getElementsByClassName("cart-footer")[0].removeAttribute("hidden");
   }
 }
@@ -43,7 +43,7 @@ function renderCartItem(item) {
   </a>
   <p class="cart-card__color">${item.Colors[item.SelectedColor].ColorName}</p>
   <p class="cart-card__quantity">qty: ${item.Quantity}</p>
-  <p class="cart-card__price"><span class="cart-struck-price">$${item.FinalPrice.toFixed(2)}</span>&emsp;<span class="cart-discount">$${item.SuggestedRetailPrice.toFixed(2)}</span></p>
+  <p class="cart-card__price"><span class="struck-price">$${item.FinalPrice.toFixed(2)}</span>&emsp;<span class="discount-price">$${item.SuggestedRetailPrice.toFixed(2)}</span></p>
 </li>`;
   return newItem;
 }

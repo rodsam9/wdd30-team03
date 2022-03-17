@@ -255,13 +255,14 @@ button:hover { cursor: pointer; }
   font-size: 24px;
   text-decoration-thickness: 3px;
 }
+/* End cart list card styles */
 
-.cart-struck-price {
+.struck-price {
   text-decoration: line-through;
   text-decoration-color: red;
 }
 
-.cart-discount {
+.discount-price {
   color: DarkOrange;
   font-weight: bold;
 }
