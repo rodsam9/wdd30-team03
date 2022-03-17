@@ -43,7 +43,7 @@ function renderCartItem(item) {
   </a>
   <p class="cart-card__color">${item.Colors[item.SelectedColor].ColorName}</p>
   <p class="cart-card__quantity">qty: ${item.Quantity}</p>
-  <p class="cart-card__price"><span class="struck-price">$${item.FinalPrice.toFixed(2)}</span>&emsp;<span class="discount-price">$${item.SuggestedRetailPrice.toFixed(2)}</span></p>
+  <p class="cart-card__price"><span class="struck-price">$${item.FinalPrice.toFixed(2)}</span>&ensp;<span class="discount-price">$${item.SuggestedRetailPrice.toFixed(2)}</span></p>
 </li>`;
   return newItem;
 }
