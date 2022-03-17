@@ -9,6 +9,7 @@ export default class ProductDetails {
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
 	this.product.Quantity = 1;
+	this.product.SelectedColor = 0;
     document.querySelector("main").innerHTML = this.renderProductDetails();
 
     // add listener to Add to Cart button
@@ -21,7 +22,7 @@ export default class ProductDetails {
 	if (cart == null) cart = [];
 	
 	// Add the item
-	let cartItem = cart.find(item => item.Id == this.product.Id);
+	let cartItem = cart.find(item => item.Id == this.product.Id && item.SelectedColor == this.product.SelectedColor);
 	if (cartItem != null)
 	  cartItem.Quantity++;
     else
