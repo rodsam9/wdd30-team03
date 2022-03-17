@@ -255,6 +255,18 @@ button:hover { cursor: pointer; }
   font-size: 24px;
   text-decoration-thickness: 3px;
 }
+
+.cart-card__remove-button {
+  position: relative;
+  top: 6px;
+  left: 6px;
+  height: 0;
+  overflow: visible;
+}
+
+.cart-card__remove-button:hover {
+  cursor: pointer;
+}
 /* End cart list card styles */
 
 .struck-price {
