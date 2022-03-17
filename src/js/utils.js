@@ -81,12 +81,13 @@ function applyBreadcrumb(template) {
   
   // Add each link afterwards
   pieces.forEach(piece => {
-    url += "/" + piece;
+    if (piece != "") { // Don't do this if we're on the main index
+      url += "/" + piece;
 	
-	// Calculate the title: "product-details?product=989CH&category=tents" => "Product Details"
-	let title = piece.split("?")[0].split("-").map(a => a[0].toUpperCase() + a.slice(1)).join(" ");
-	text += `<li><a href="${url}">${title}</a></li>`;
-  });
+	  // Calculate the title: "product-details?product=989CH&category=tents" => "Product Details"
+	  let title = piece.split("?")[0].split("-").map(a => a[0].toUpperCase() + a.slice(1)).join(" ");
+	  text += `<li><a href="${url}">${title}</a></li>`;
+  }});
   
   // Apply the breadcrumb trail
   text += "</ul>"
