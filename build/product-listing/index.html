@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sleep Outside | Home</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/style.css">
     <script type="module" src="../js/main.js" defer></script>
   </head>
 
@@ -25,14 +23,16 @@
         <ul class="product-list">
           <template id="product-card-template">
             <li class="product-card">
-              <a
-                class="product-card__link"
-                href="product-details?product=$PRODUCT_ID$&amp;category=$CATEGORY$"
-              >
-                <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$" />
+              <a class="product-card__link" href="product-details?product=$PRODUCT_ID$&amp;category=$CATEGORY$">
+                <img src="$IMG_SRC$" alt="$IMG_DESCRIPTION$">
                 <h3 class="product-card__brand">$BRAND$</h3>
                 <h2 class="product-card__name">$NAME$</h2>
-                <p class="product-card__price">$LIST_PRICE$</p>
+                <p class="product-card__price">
+                  <span class="struck-price">$$RETAIL_PRICE$</span>
+                </p>
+                <p>
+                  <span class="discount-price">$$LIST_PRICE$</span>&#x2002;(<span class="price-cut">$DISCOUNT$% off!</span>)
+                </p>
               </a>
             </li>
           </template>
@@ -40,5 +40,6 @@
       </section>
     </main>
     <footer></footer>
-  </body>
-</html>
+  
+
+</body></html>

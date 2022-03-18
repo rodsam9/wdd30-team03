@@ -1,4 +1,4 @@
-import ProductData from "./productData.js";
+import ExternalServices from "./externalServices.js";
 import "./utils.js"; // To get String.multiReplace()
 
 export default class ProductList {
@@ -14,7 +14,7 @@ export default class ProductList {
       return this._list;
     } else {
       // Get the list of products
-      this._list = await new ProductData(this.category).getData();
+      this._list = await new ExternalServices(this.category).getData();
       return this._list;
     }
   }
@@ -31,6 +31,10 @@ export default class ProductList {
     clone = element.lastElementChild;
 
     // Replace each template ID with the product's corresponding data
+    let discount =
+      ((product.SuggestedRetailPrice - product.FinalPrice) /
+        product.SuggestedRetailPrice) *
+      100;
     clone.innerHTML = clone.innerHTML.multiReplace([
       ["$PRODUCT_ID$", product.Id],
       ["$CATEGORY$", this.category],
@@ -38,7 +42,9 @@ export default class ProductList {
       ["$IMG_DESCRIPTION$", product.Name],
       ["$BRAND$", product.Brand.Name],
       ["$NAME$", product.Name],
-      ["$LIST_PRICE$", product.ListPrice],
+      ["$LIST_PRICE$", product.ListPrice.toFixed(2)],
+      ["$RETAIL_PRICE$", product.SuggestedRetailPrice.toFixed(2)],
+      ["$DISCOUNT$", discount.toFixed(0)],
     ]);
   }
 

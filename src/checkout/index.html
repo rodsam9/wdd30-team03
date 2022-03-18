@@ -12,6 +12,114 @@
     <main class="divider">
       <section class="products">
         <h2>Review & Place your Order</h2>
+        <form id="checkout-form">
+          <fieldset>
+            <legend>Shipping</legend>
+            <label for="fname">First Name</label><br />
+            <input name="fname" id="checkout__fname" autofocus />
+            <span
+              class="checkout-error"
+              id="checkout__fname-error"
+              hidden
+            ></span
+            ><br />
+            <label for="lname">Last Name</label><br />
+            <input name="lname" id="checkout__lname" />
+            <span
+              class="checkout-error"
+              id="checkout__lname-error"
+              hidden
+            ></span
+            ><br />
+            <label for="street">Street</label><br />
+            <input name="street" id="checkout__street" />
+            <span
+              class="checkout-error"
+              id="checkout__street-error"
+              hidden
+            ></span
+            ><br />
+            <label for="city">City</label><br />
+            <input name="city" id="checkout__city" />
+            <span class="checkout-error" id="checkout__city-error" hidden></span
+            ><br />
+            <label for="state">State</label><br />
+            <input name="state" id="checkout__state" />
+            <span
+              class="checkout-error"
+              id="checkout__state-error"
+              hidden
+            ></span
+            ><br />
+            <label for="zip">Zip</label><br />
+            <input name="zip" id="checkout__zip" />
+            <span class="checkout-error" id="checkout__zip-error" hidden></span
+            ><br />
+            <label for="phone">Phone Number</label><br />
+            <input name="phone" id="checkout__phone" />
+            <span
+              class="checkout-error"
+              id="checkout__phone-error"
+              hidden
+            ></span
+            ><br />
+          </fieldset>
+          <fieldset>
+            <legend>Payment</legend>
+            <label for="card-number">Card Number</label><br />
+            <input name="card-number" id="checkout__card-number" />
+            <span
+              class="checkout-error"
+              id="checkout__card-number-error"
+              hidden
+            ></span
+            ><br />
+            <label for="card-expiration">Expiration Date</label><br />
+            <input
+              type="month"
+              name="card-expiration"
+              id="checkout__card-expiration"
+            />
+            <span
+              class="checkout-error"
+              id="checkout__card-expiration-error"
+              hidden
+            ></span
+            ><br />
+            <label for="card-code">Security Code</label><br />
+            <input name="card-code" id="checkout__card-code" />
+            <span
+              class="checkout-error"
+              id="checkout__card-code-error"
+              hidden
+            ></span
+            ><br />
+          </fieldset>
+          <fieldset>
+            <legend>Order Summary</legend>
+            <div class="checkout-div">
+              <span class="checkout-label">Item Subtotal ($ITEM_COUNT$)</span>
+              <span class="checkout-price">$$SUBTOTAL$</span>
+            </div>
+            <div class="checkout-div">
+              <span class="checkout-label">Shipping Estimate</span>
+              <span class="checkout-price">$$SHIPPING$</span>
+            </div>
+            <div class="checkout-div">
+              <span class="checkout-label">Tax</span>
+              <span class="checkout-price">$$TAX$</span>
+            </div>
+            <div class="checkout-div">
+              <span class="checkout-label">Order Total</span>
+              <span class="checkout-price">$$TOTAL$</span>
+            </div>
+          </fieldset>
+          <br />
+          <div class="checkout-buttons">
+            <button type="button" id="checkout-button">Checkout</button>
+            <button type="button" id="reset-button">Reset</button>
+          </div>
+        </form>
       </section>
     </main>
     <footer></footer>
