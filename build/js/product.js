@@ -1,8 +1,1 @@
-import o from "./productData.js";
-import r from "./productDetails.js";
-import { getParam as t, loadHeaderFooter as a } from "./utils.js";
-const c = t("category"),
-  d = new o(c),
-  e = t("product"),
-  s = new r(e, d);
-s.init(), a();
+var n=(i,s,e)=>new Promise((u,c)=>{var m=t=>{try{r(e.next(t))}catch(o){c(o)}},l=t=>{try{r(e.throw(t))}catch(o){c(o)}},r=t=>t.done?u(t.value):Promise.resolve(t.value).then(m,l);r((e=e.apply(i,s)).next())});import p from"./externalServices.js";import y from"./productDetails.js";import{getParam as d,loadHeaderFooter as f}from"./utils.js";const g=d("category"),S=new p(g),j=d("product"),a=new y(j,S);(function(){return n(this,null,function*(){yield a.init(),document.querySelector("main").innerHTML=a.renderProductDetails(),document.getElementById("addToCart").addEventListener("click",a.addToCart())})})(),f();

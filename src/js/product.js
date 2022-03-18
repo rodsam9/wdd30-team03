@@ -7,7 +7,7 @@ const dataSource = new ExternalServices(category);
 const productId = getParam("product");
 const product = new ProductDetails(productId, dataSource);
 
-(async function() {
+(async function () {
   await product.init();
   document.querySelector("main").innerHTML = product.renderProductDetails();
 
@@ -16,7 +16,6 @@ const product = new ProductDetails(productId, dataSource);
     .getElementById("addToCart")
     .addEventListener("click", product.addToCart());
 })();
-
 
 // Load the header and footer
 loadHeaderFooter();

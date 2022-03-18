@@ -31,7 +31,10 @@ export default class ProductList {
     clone = element.lastElementChild;
 
     // Replace each template ID with the product's corresponding data
-	let discount = (product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice * 100;
+    let discount =
+      ((product.SuggestedRetailPrice - product.FinalPrice) /
+        product.SuggestedRetailPrice) *
+      100;
     clone.innerHTML = clone.innerHTML.multiReplace([
       ["$PRODUCT_ID$", product.Id],
       ["$CATEGORY$", this.category],
@@ -40,8 +43,8 @@ export default class ProductList {
       ["$BRAND$", product.Brand.Name],
       ["$NAME$", product.Name],
       ["$LIST_PRICE$", product.ListPrice.toFixed(2)],
-	  ["$RETAIL_PRICE$", product.SuggestedRetailPrice.toFixed(2)],
-	  ["$DISCOUNT$", discount.toFixed(0)]
+      ["$RETAIL_PRICE$", product.SuggestedRetailPrice.toFixed(2)],
+      ["$DISCOUNT$", discount.toFixed(0)],
     ]);
   }
 

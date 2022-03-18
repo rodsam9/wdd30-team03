@@ -104,7 +104,9 @@ button {
   font-size: var(--large-font);
 }
 
-button:hover { cursor: pointer; }
+button:hover {
+  cursor: pointer;
+}
 
 .divider {
   border-bottom: 2px solid var(--primary-color);
@@ -271,38 +273,39 @@ button:hover { cursor: pointer; }
 
 /* Start checkout styles */
 .checkout-error {
-	color: red;
-	position: relative;
+  color: red;
+  position: relative;
 }
 
 #checkout-form {
-	width: fit-content;
+  width: fit-content;
 }
 
 #checkout-form > fieldset > input {
-	width: 100%;
+  width: 100%;
 }
 
-#checkout-button, #reset-button {
-    display: inline-block;
+#checkout-button,
+#reset-button {
+  display: inline-block;
 }
 
 .checkout-buttons {
-	display: grid;
-	grid-auto-flow: column;
-	justify-items: center;
+  display: grid;
+  grid-auto-flow: column;
+  justify-items: center;
 }
 
 .checkout-div {
-	margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .checkout-div:last-of-type {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .checkout-price {
-	float: right;
+  float: right;
 }
 /* End checkout styles */
 

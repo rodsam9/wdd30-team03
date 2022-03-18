@@ -70,27 +70,33 @@ export async function loadTemplate(path) {
 function applyBreadcrumb(template) {
   let text = "<ul>";
   let url = location.origin;
-  
+
   // Get all of the possible links backwards by splitting the url for each '/' character (then rejoin them for links)
   // "http://localhost:8080/product-details?product=989CH&category=tents" would become [ , product-details?product=989CH&category=tents ]
   let pieces = location.href.replace(url, "").split("/");
   pieces.shift(); // Remove blank space
-  
+
   // Add the index page to the beadcrumb trail
   // text += `<li><a href="${url}">Home</a></li>`;
-  
+
   // Add each link afterwards
-  pieces.forEach(piece => {
-    if (piece != "" && piece != "index.html") { // Don't do this if we're on the main index
+  pieces.forEach((piece) => {
+    if (piece != "" && piece != "index.html") {
+      // Don't do this if we're on the main index
       url += "/" + piece;
-	
-	  // Calculate the title: "product-details?product=989CH&category=tents" => "Product Details"
-	  let title = piece.split("?")[0].split("-").map(a => a[0].toUpperCase() + a.slice(1)).join(" ");
-	  text += `<li><a href="${url}">${title}</a></li>`;
-  }});
-  
+
+      // Calculate the title: "product-details?product=989CH&category=tents" => "Product Details"
+      let title = piece
+        .split("?")[0]
+        .split("-")
+        .map((a) => a[0].toUpperCase() + a.slice(1))
+        .join(" ");
+      text += `<li><a href="${url}">${title}</a></li>`;
+    }
+  });
+
   // Apply the breadcrumb trail
-  text += "</ul>"
+  text += "</ul>";
   template.innerHTML = template.innerHTML.replace("%breadcrumb%", text);
 }
 
