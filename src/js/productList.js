@@ -1,4 +1,4 @@
-import ProductData from "./productData.js";
+import ExternalServices from "./externalServices.js";
 import "./utils.js"; // To get String.multiReplace()
 
 export default class ProductList {
@@ -14,7 +14,7 @@ export default class ProductList {
       return this._list;
     } else {
       // Get the list of products
-      this._list = await new ProductData(this.category).getData();
+      this._list = await new ExternalServices(this.category).getData();
       return this._list;
     }
   }

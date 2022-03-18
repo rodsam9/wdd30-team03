@@ -1,4 +1,5 @@
 import { loadHeaderFooter, getLocalStorage } from "./utils.js";
+import ExternalServices from "./externalServices.js";
 
 const CREDIT_REGEX = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/; // ie. 1234 1234 1234 1234
 const SECURITY_CODE_REGEX = /^\d{3}$/;               // ie. 123
@@ -164,12 +165,6 @@ function validate() {
 	return validated;
 }
 
-function submitPayment() {
-	if (validate() == true) {
-		document.getElementById("checkout-form").submit();
-	}
-}
-
 function reset() {
 	CHECKOUT_ELEMENT_LIST.forEach((id) => {
 		document.getElementById("checkout__" + id).value = "";
@@ -177,46 +172,104 @@ function reset() {
 	});
 }
 
-function calculateCost() {
-	let cart = getLocalStorage("so-cart");
-	let itemCount = 0;
-	let subTotal = 0.00;
-	let shipping = 8.00; // $10 for first item ($8 + $2)
-	
-	// Sum up the costs of each item
-	cart.forEach((item) => {
-		itemCount += item.Quantity;
-		subTotal += item.FinalPrice * item.Quantity;
-		shipping += 2.0 * item.Quantity;
-	});
-	
-	// Calculate the tax and total costs
-	let tax = subTotal * 0.06;
-	let total = subTotal + shipping + tax;
-	
-	// Output the data
-	let form = document.getElementById("checkout-form");
-	form.innerHTML = form.innerHTML.multiReplace([
-	  ["$ITEM_COUNT$", itemCount],
-      ["$SUBTOTAL$", subTotal.toFixed(2)],
-	  ["$SHIPPING$", shipping.toFixed(2)],
-	  ["$TAX$", tax.toFixed(2)],
-	  ["$TOTAL$", total.toFixed(2)]
-    ]);
+/* Changes month format to M/YY */
+function processMonth(month) {
+	return document.getElementById("checkout__card-expiration").value;
+}
+
+class CheckoutProcess {
+	constructor() { this.calculateCost(); this.cleanCart(); }
+
+	/* Removes unnececssary properties from cart items */
+	cleanCart() {
+		this.checkoutCart = [];
+		this.cart.forEach((item) => {
+			this.checkoutCart.push({
+				id: item.Id,
+				name: item.Name,
+				price: item.FinalPrice,
+				quantity: item.Quantity
+			})
+		});
+	}
+
+	submitPayment() {
+		if (validate() == true) {
+			/* The server uses some curiously formatted json, so we reinvent it ourselves */
+			let json = `{ 
+			  orderDate: '${(new Date()).toISOString()}',
+			  fname: "${document.getElementById("checkout__fname").value}",
+			  lname: "${document.getElementById("checkout__lname").value}",
+			  street: "${document.getElementById("checkout__street").value}",
+			  city: "${document.getElementById("checkout__city").value}",
+			  state: "${document.getElementById("checkout__state").value}",
+			  zip: "${document.getElementById("checkout__zip").value}",
+			  cardNumber: "${document.getElementById("checkout__card-number").value.replace(" ", "")}",
+			  expiration: "${processMonth()}",
+			  code: "${document.getElementById("checkout__card-code").value}",
+			  items: ${JSON.stringify(this.checkoutCart, null, 2)},
+			  orderTotal: "${this.total.toFixed(2)}",
+			  shipping: ${this.shipping},
+			  tax: "${this.tax.toFixed(2)}"
+			}`;
+			
+			const options = {
+			  method: 'POST',
+			  headers: {
+				'Content-Type': 'application/json'
+			  },
+			  body: json
+			};
+			
+			const serverURL = "http://157.201.228.93:2992/checkout";
+			this.serverResponse = fetch(serverURL, options);
+			
+			// TODO: Remove the below code and do something else with the server data
+			document.getElementsByTagName("h2")[0].innerHTML = this.serverResponse;
+		}
+	}
+
+	calculateCost() {
+		this.cart = getLocalStorage("so-cart");
+		this.itemCount = 0;
+		this.subTotal = 0.00;
+		this.shipping = 8.00; // $10 for first item ($8 + $2)
+
+		// Sum up the costs of each item
+		this.cart.forEach((item) => {
+			this.itemCount += item.Quantity;
+			this.subTotal += item.FinalPrice * item.Quantity;
+			this.shipping += 2.0 * item.Quantity;
+		});
+
+		// Calculate the tax and total costs
+		this.tax = this.subTotal * 0.06;
+		this.total = this.subTotal + this.shipping + this.tax;
+
+		// Output the data
+		let form = document.getElementById("checkout-form");
+		form.innerHTML = form.innerHTML.multiReplace([
+		  ["$ITEM_COUNT$", this.itemCount],
+		  ["$SUBTOTAL$", this.subTotal.toFixed(2)],
+		  ["$SHIPPING$", this.shipping.toFixed(2)],
+		  ["$TAX$", this.tax.toFixed(2)],
+		  ["$TOTAL$", this.total.toFixed(2)]
+		]);
+	}
 }
 
 // Load the header and footer
 loadHeaderFooter();
 
 // Calculate the total cost
-calculateCost();
+let checkout = new CheckoutProcess();
 
 // Add event listeners to each of the elements
 document.getElementById("checkout__zip").addEventListener("input", manageZipInput);
 document.getElementById("checkout__phone").addEventListener("input", managePhoneInput);
 document.getElementById("checkout__card-number").addEventListener("input", manageCreditInput);
 document.getElementById("checkout__card-code").addEventListener("input", manageSecurityCodeInput);
-document.getElementById("checkout-button").addEventListener("click", submitPayment);
+document.getElementById("checkout-button").addEventListener("click", checkout.submitPayment.bind(checkout));
 document.getElementById("reset-button").addEventListener("click", reset);
 CHECKOUT_ELEMENT_LIST.forEach((id) => {
 	document.getElementById("checkout__" + id).addEventListener("blur", () => {

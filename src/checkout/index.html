@@ -43,7 +43,7 @@
 			<input name="card-number" id="checkout__card-number">
 			<span class="checkout-error" id="checkout__card-number-error" hidden></span><br>
 			<label for="card-expiration">Expiration Date</label><br>
-			<input type="date" name="card-expiration" id="checkout__card-expiration">
+			<input type="month" name="card-expiration" id="checkout__card-expiration">
 			<span class="checkout-error" id="checkout__card-expiration-error" hidden></span><br>
 			<label for="card-code">Security Code</label><br>
 			<input name="card-code" id="checkout__card-code">
@@ -55,22 +55,18 @@
 			  <span class="checkout-label">Item Subtotal ($ITEM_COUNT$)</span>
 			  <span class="checkout-price">$$SUBTOTAL$</span>
 			</div>
-			<input type="hidden" name="subtotal" id="checkout__subtotal">
 			<div class="checkout-div">
 			  <span class="checkout-label">Shipping Estimate</span>
 			  <span class="checkout-price">$$SHIPPING$</span>
 			</div>
-			<input type="hidden" name="shipping" id="checkout__shipping">
 			<div class="checkout-div">
 			  <span class="checkout-label">Tax</span>
 			  <span class="checkout-price">$$TAX$</span>
 			</div>
-			<input type="hidden" name="tax" id="checkout__tax">
 			<div class="checkout-div">
 			  <span class="checkout-label">Order Total</span>
 			  <span class="checkout-price">$$TOTAL$</span>
 			</div>
-			<input type="hidden" name="total" id="checkout__total">
 		  </fieldset><br>
 		  <div class="checkout-buttons">
 		    <button type="button" id="checkout-button">Checkout</button>

@@ -10,12 +10,6 @@ export default class ProductDetails {
     this.product = await this.dataSource.findProductById(this.productId);
 	this.product.Quantity = 1;
 	this.product.SelectedColor = 0;
-    document.querySelector("main").innerHTML = this.renderProductDetails();
-
-    // add listener to Add to Cart button
-    document
-      .getElementById("addToCart")
-      .addEventListener("click", this.addToCart.bind(this));
   }
   addToCart() {
 	let cart = getLocalStorage("so-cart");
