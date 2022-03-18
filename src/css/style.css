@@ -269,6 +269,43 @@ button:hover { cursor: pointer; }
 }
 /* End cart list card styles */
 
+/* Start checkout styles */
+.checkout-error {
+	color: red;
+	position: relative;
+}
+
+#checkout-form {
+	width: fit-content;
+}
+
+#checkout-form > fieldset > input {
+	width: 100%;
+}
+
+#checkout-button, #reset-button {
+    display: inline-block;
+}
+
+.checkout-buttons {
+	display: grid;
+	grid-auto-flow: column;
+	justify-items: center;
+}
+
+.checkout-div {
+	margin-bottom: 8px;
+}
+
+.checkout-div:last-of-type {
+	margin-bottom: 0px;
+}
+
+.checkout-price {
+	float: right;
+}
+/* End checkout styles */
+
 .struck-price {
   text-decoration: line-through;
   text-decoration-color: red;
