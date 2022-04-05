@@ -1,8 +1,10 @@
 import { loadHeaderFooter, getLocalStorage } from "./utils.js";
+import { convertToJson } from "./externalServices.js";
 
 const CREDIT_REGEX = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/; // ie. 1234 1234 1234 1234
 const SECURITY_CODE_REGEX = /^\d{3}$/; // ie. 123
 const PHONE_REGEX = /^\(\d{3}\)\s\d{3}-\d{4}$/; // ie. (123) 456-7890
+const EXPIRATION_REGEX = /^\d{4}-\d{2}$/ // ie. 2022-03
 const CHECKOUT_ELEMENT_LIST = [
   "fname",
   "lname",
@@ -22,6 +24,21 @@ function displayError(id, error, displayStyle = "inline", focusElement = "") {
   element.innerHTML = error;
   element.style.display = displayStyle;
   if (focusElement != "") document.getElementById(focusElement).focus();
+}
+
+/* Returns true if the date is in the future (card has not expired) */
+function isMonthValid(month) {
+  let currentDate = new Date();
+  if (parseInt(month.substring(0, 4)) > parseInt(currentDate.getFullYear())) {
+    return true; // Card valid; Card's year is in the future
+  } else if (parseInt(month.substring(0, 4)) == parseInt(currentDate.getFullYear())) {
+	if (parseInt(month.slice(-2)) >= parseInt(currentDate.getMonth()))
+	  return true; // Card valid; Card's year = current year, but month is current or in the future
+    else
+	  return false; // Card expired; Card's year = current year, but month is in the past
+  } else {
+	return false; // Card expired; year is in the past
+  }
 }
 
 /* Returns true if the element has valid data. If focusElement is set then it also moves the screen focus to that element */
@@ -80,6 +97,25 @@ function parse(id, focusElement = false) {
           );
           return false;
         } else {
+          return true;
+        }
+      case "card-expiration":
+        if (!EXPIRATION_REGEX.test(e.value)) {
+          displayError(
+            "checkout__" + id + "-error",
+            "Invalid date.",
+            "inline",
+            focusElement ? "checkout__" + id : ""
+          );
+          return false;
+        } else if (!isMonthValid(e.value)) {
+            displayError(
+              "checkout__" + id + "-error",
+              "The card has expired.",
+              "inline",
+              focusElement ? "checkout__" + id : ""
+            );
+		}else {
           return true;
         }
       default:
@@ -220,7 +256,7 @@ function reset() {
 
 /* Changes month format to M/YY */
 function processMonth(month) {
-  return month;
+  return parseInt(month.slice(-2)).toString() + "/" + month.substring(2, 4);
 }
 
 class CheckoutProcess {
@@ -242,7 +278,7 @@ class CheckoutProcess {
     });
   }
 
-  submitPayment() {
+  async submitPayment() {
     if (validate() == true) {
       /* The server uses some curiously formatted json, so we reinvent it ourselves */
       let json = `{ 
@@ -255,7 +291,7 @@ class CheckoutProcess {
         zip: "${document.getElementById("checkout__zip").value}",
         cardNumber: "${document
           .getElementById("checkout__card-number")
-          .value.replace(" ", "")}",
+          .value.replaceAll(" ", "")}",
         expiration: "${processMonth(
           document.getElementById("checkout__card-expiration").value
         )}",
@@ -268,14 +304,21 @@ class CheckoutProcess {
 
       const options = {
         method: "POST",
+		mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
         body: json,
       };
 
-      const serverURL = "http://157.201.228.93:2992/checkout";
-      this.serverResponse = fetch(serverURL, options);
+      const serverURL = "http://157.201.228.93:2992/checkout/";
+	  
+	  try {
+        this.serverResponse = await fetch(serverURL, options)
+	      .then(convertToJson);
+	  } catch (err) {
+		document.getElementsByTagName("h2")[0].innerHTML = err.message;
+	  }
 
       // TODO: Remove the below code and do something else with the server data
       document.getElementsByTagName("h2")[0].innerHTML = this.serverResponse;

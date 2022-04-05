@@ -1,8 +1,9 @@
-function convertToJson(res) {
+export function convertToJson(res) {
+  let json = JSON.stringify(res);
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("Bad Response");
+    throw { name: 'servicesError', message: res.toString() };
   }
 }
 
